@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+
+        .square {
+            background-color: gold;
+            border: 1px solid #123123;
+            font-size: 20px;
+            width: 100px;
+            height: 100px;
+            display: grid;
+            text-align: center;
+            align-items: center;
+            border-radius: 15px;
+        
+        }
+
+        .wrap {
+            display: grid;
+            grid-template-columns: 100px 100px 100px;
+            grid-template-rows: 100px 100px 100px;
+            gap: 6px;
+        
+            
+
+        }
+
+        .winner {
+            background-color: lightgray;
+            border: 1px solid black;
+            text-align: center;
+            width:150px;
+            height: 25px;
+            text-align: center;
+            align-items: center;
+            display: grid;
+ 
+    
+        }
+
+        .turn {
+            background-color: lightgray;
+            border: 1px solid black;
+            text-align: center;
+            width:150px;
+            height: 25px;
+            text-align: center;
+            align-items: center;
+            display: grid
+        
+        }
+
+        .square:hover {
+        	font-weight: 500;
+        	background-color: orange;
+        }
+
+    </style>
+    <script>
+
+        function startTurn () {
+
+
+            n = Math.floor(Math.random() * 2); 
+            if (n == 0) {
+                turn = 'X'
+            } 
+    
+            else {
+                turn = 'O'
+            }
+
+            changeTurn()
+
+    
+        }
+
+
+        function changeTurn () {
+            if (turn == 'X') {
+                turn = 'O'
+            } 
+    
+            else {
+                turn = 'X'
+            }
+    
+        let turnBox = document.querySelector('.turn');
+        turnBox.innerHTML = turn + ' is Turn';
+            
+        }
+
+        window.onload = function () {
+            
+
+            startTurn()
+
+
+            let box = document.querySelectorAll('div.square');
+            
+            //Need help with this when clicked inside it does the alert
+            for (j of box) {
+            j.addEventListener('click', function() {
+ 
+                if (this.innerHTML != "X" && this.innerHTML != "O") {
+                    this.innerHTML = turn;
+                    //console.log("mark1");
+                    changeTurn();
+                } else {
+                    alert ('Try again in another box');
+                    //console.log("mark2");
+                }
+
+               
+                });
+            }
+
+        }
+
+    </script>
+</head>
+<body> 
+    <h1>Tic Tac Toe Game</h1>
+    
+    <div class="wrap"> 
+        <script>
+            const NUM_SQUARES = 9;
+            for (i=0; i<NUM_SQUARES; i++)
+            {
+                id = "sq"+i;
+                document.write( "<div class='square' id='" + id + "'></div>" );
+            }
+            
+
+        </script>
+    </div>
+    
+    <br>
+    <div class="turn"></div>
+    <br>
+    <div class="winner"> X is Winner</div>
+    <br>
+    <button onclick="resetButton()"> Start Game </button>
+    <script>
+
+    turn = 'X'; 
+    
+    //array moves to add x and o and the remaining "-"
+    let moves = "sq0 sq1 sq2 sq3 sq4 sq5 sq6 sq7 sq8".split(" ");
+    moves.map(id => {
+        let value = document.getElementById(id).innerHTML.trim();
+        return value !== "" ? value : "-";
+    });
+
+
+    //win array
+    let winConditions = [];
+
+    // Horizontal 
+    winConditions.push(["X", "X", "X", "-", "-", "-", "-", "-", "-"]); // Top 
+    winConditions.push(["-", "-", "-", "X", "X", "X", "-", "-", "-"]); // Middle 
+    winConditions.push(["-", "-", "-", "-", "-", "-", "X", "X", "X"]); // Bottom 
+
+    // Vertical 
+    winConditions.push(["X", "-", "-", "X", "-", "-", "X", "-", "-"]); // Left 
+    winConditions.push(["-", "X", "-", "-", "X", "-", "-", "X", "-"]); // Middle 
+    winConditions.push(["-", "-", "X", "-", "-", "X", "-", "-", "X"]); // Right 
+
+    // Diagonal 
+    winConditions.push(["X", "-", "-", "-", "X", "-", "-", "-", "X"]); // 
+    winConditions.push(["-", "-", "X", "-", "X", "-", "X", "-", "-"]);
+
+
+    /*let winner = null;
+
+    for (let condition of winConditions) {
+        if (condition === "XXX") {
+            winner = "X";
+            break;
+        } else if (condition === "OOO") {
+            winner = "O";
+            break;
+        }
+    }
+
+    // stalemate
+    if (!winner) {
+        if (!moves.includes("-")) {
+            console.log("It's a stalemate!");
+        } else {
+            console.log("The game is still ongoing.");
+        }
+    }*/
+
+
+    /*for (let condition of winConditions) {
+        // Convert the condition array to a string for comparison
+        let conditionString = condition.join("");
+        
+        // Convert the moves array to a string for comparison
+        let movesString = moves.join("");
+        
+        // Check if the moves array contains the win condition
+        if (movesString.includes(conditionString)) {
+            // If X wins
+            if (conditionString === "XXX") {
+                console.log("Player X wins!");
+                break;
+            }
+            // If O wins
+            else if (conditionString === "OOO") {
+                console.log("Player O wins!");
+                break;
+            }
+        }
+    }*/
+
+
+
+    //reset button
+    function resetButton() {
+        for (i=0; i<9; i++){
+            id = "sq"+i;
+            document.getElementById(id).innerHTML = "";
+        }
+      }
+
+    </script>  
+</body>
+</html>
